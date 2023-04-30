@@ -1,7 +1,19 @@
+cipher_ascii = \
+"""      _       _               
+     (_)     | |              
+  ___ _ _ __ | |__   ___ _ __ 
+ / __| | '_ \| '_ \ / _ \ '__|
+| (__| | |_) | | | |  __/ |   
+ \___|_| .__/|_| |_|\___|_|   
+       | |                    
+       |_|                    """
+
+
 class Manager:
     def __init__(self):
-        self.memory= {"enc_messages": [], 'dec_messages': []}
+        self.memory = {"enc_messages": [], 'dec_messages': []}
         self.program_is_working = True
+        self.alphabet = 'abcdefghijklmnoprstuwxyz'
 
     def start(self) -> None:
         while self.program_is_working:
@@ -9,8 +21,21 @@ class Manager:
             self.execute(choice_number)
 
     def show_menu(self) -> int:
-        print("Caesar cipher\n1. Encrypt a message\n2. Decrypt a message\n3. Exit")
-        choice_number = int(input("Which action do you choose: ").strip())
+        run_menu = True
+        choice_number = 3
+        print("*" * 31)
+        print(cipher_ascii)
+        print("*" * 31)
+        while run_menu:
+            print("1. Encrypt a message\n2. Decrypt a message\n3. Exit")
+            try:
+                choice_number = int(input("Which action do you choose: ").strip())
+                if choice_number in range(1, 4):
+                    run_menu = False
+                else:
+                    print(f"Provided option: {choice_number}, not such option. Choose again.")
+            except ValueError:
+                print("Please provide number instead of string.\n")
         return choice_number
 
     def execute(self, choice_number: int) -> None:
@@ -26,7 +51,6 @@ class Manager:
     def encrypt(self) -> str:
         message_to_encrypt = input("Please provide message to encrypt: ").strip()
         method = int(input("What encrypting method would you like to use:\n1. ROT13\n2. ROT47: ").strip())
-        alphabet = 'abcdefghijklmnoprstuwxyz'
         encrypted_message = []
 
         if method == 1:
@@ -40,15 +64,14 @@ class Manager:
             if letter == ' ':
                 encrypted_message.append(letter)
             else:
-                new_letter_index = (alphabet.index(letter) + shift) % len(alphabet)
-                encrypted_message.append(alphabet[new_letter_index])
+                new_letter_index = (self.alphabet.index(letter) + shift) % len(self.alphabet)
+                encrypted_message.append(self.alphabet[new_letter_index])
         print(''.join(encrypted_message))
         return ''.join(encrypted_message)
 
     def decrypt(self) -> str:
         message_to_decrypt = input("Please provide message to decrypt: ").strip()
         method = int(input("What decrypting method would you like to use:\n1. ROT13\n2. ROT47: ").strip())
-        alphabet = 'abcdefghijklmnoprstuwxyz'
         decrypted_message = []
 
         if method == 1:
@@ -62,8 +85,8 @@ class Manager:
             if letter == ' ':
                 decrypted_message.append(letter)
             else:
-                new_letter_index = (alphabet.index(letter) - shift) % len(alphabet)
-                decrypted_message.append(alphabet[new_letter_index])
+                new_letter_index = (self.alphabet.index(letter) - shift) % len(self.alphabet)
+                decrypted_message.append(self.alphabet[new_letter_index])
         print(''.join(decrypted_message))
         return ''.join(decrypted_message)
 
