@@ -1,7 +1,6 @@
-from encrypt_decrypt import CryptoProcesses
+from func.encrypt_decrypt import CryptoProcesses
 from dataclasses import dataclass
 from typing import List
-import string
 
 cipher_ascii = \
 """      _       _               
@@ -15,24 +14,24 @@ cipher_ascii = \
 
 
 @dataclass
-class Text:
+class CryptoElem:
     message: str
     rot_type: str
-    status: str
+    crypto_type: str
 
     def __repr__(self):
         pass
 
 
 class Buffer:
-    memory: List[Text] = []
+    memory: List[CryptoElem] = []
 
 
 class Manager:
     def __init__(self):
-        self.memory = Buffer()
+        buffer = Buffer()
+        self.memory = buffer.memory
         self.program_is_working = True
-        self.alphabet = string.ascii_lowercase
 
     def start(self) -> None:
         while self.program_is_working:
@@ -48,7 +47,7 @@ class Manager:
 
     def show_menu(self) -> int:
         run_menu = True
-        choice_number = 0  # PYTANIE, czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
+        choice_number = 0                                                                                      # PYTANIE, czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
         print("*" * 31)
         print(cipher_ascii)
         print("*" * 31)
@@ -65,13 +64,11 @@ class Manager:
     def execute(self, choice_number: int) -> None:
         match choice_number:
             case 1:
-                crypto_process = CryptoProcesses("encrypting")
-                crypto_process.start()
-                # stworzenie obiektu dataclass
-                # wykonanie enkrypcji z pobraniem info od uzytkownika
-                # zapisanie do buffera
+                crypto_type = "encrypting"
+                self.crypto_execution(crypto_type)
             case 2:
-                pass
+                crypto_type = "decrypting"
+                self.crypto_execution(crypto_type)
             case 3:
                 pass
             case 4:
@@ -84,12 +81,8 @@ class Manager:
                 print("Good bye!")
                 self.program_is_working = False
 
-        # if choice_number == 1:
-        #     encrypted_message = self.encrypt()
-        #     self.memory["enc_messages"].append(encrypted_message)
-        # elif choice_number == 2:
-        #     decrypted_message = self.decrypt()
-        #     self.memory["dec_messages"].append(decrypted_message)
-        # elif choice_number == 3:
-        #     self.program_is_working = False
-
+    def crypto_execution(self, crypto_type):
+        crypto_process = CryptoProcesses(crypto_type)
+        final_message, rot_type = crypto_process.start()
+        crypto_elem = CryptoElem(final_message, rot_type, crypto_type)
+        self.memory.append(crypto_elem)
