@@ -18,7 +18,7 @@ class Buffer:
     def show_memory_buffer(self) -> None:
         print("Printing current memory buffer.")
         print('=' * 42)
-        print(f"{'MESSAGE': <18}{'AFTER': <15}{'ROT TYPE': <15}")
+        print(f"{'MESSAGE:': <18}{'AFTER:': <15}{'ROT TYPE:': <15}")
         for crypto_elem in self.memory:
             print(crypto_elem)
         print('=' * 42)

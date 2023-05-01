@@ -1,5 +1,6 @@
 from func.encrypt_decrypt import CryptoProcesses
 from func.memory_buffer import CryptoElem, Buffer
+from func.file_handler import FileHandler
 
 cipher_ascii = \
 """      _       _               
@@ -16,6 +17,7 @@ class Manager:
     def __init__(self):
         self.buffer = Buffer()
         self.program_is_working = True
+        self.file_handler = FileHandler()
 
     def start(self) -> None:
         print("*" * 31)
@@ -58,9 +60,10 @@ class Manager:
             case 4:
                 self.buffer.clear_memory_buffer()
             case 5:
-                pass
+                self.file_handler.write_to_file(self.buffer.memory)
             case 6:
-                pass
+                for crypto_object in self.file_handler.read_from_file():
+                    self.buffer.memory.append(crypto_object)
             case 7:
                 print("Good bye!")
                 self.program_is_working = False
@@ -71,4 +74,3 @@ class Manager:
         crypto_elem = CryptoElem(final_message, rot_type, crypto_type)
         self.buffer.memory.append(crypto_elem)
         print("Message added to memory buffer.")
-
