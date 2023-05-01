@@ -50,11 +50,9 @@ class Manager:
     def execute(self, choice_number: int) -> None:
         match choice_number:
             case 1:
-                crypto_type = "encrypting"
-                self.crypto_execution(crypto_type)
+                self.crypto_execution("encrypting")
             case 2:
-                crypto_type = "decrypting"
-                self.crypto_execution(crypto_type)
+                self.crypto_execution("decrypting")
             case 3:
                 self.buffer.show_memory_buffer()
             case 4:
