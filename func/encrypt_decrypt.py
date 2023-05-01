@@ -15,7 +15,7 @@ class CryptoProcesses:
     def get_data_for_operation(self) -> Tuple[str, str]:
         get_data_running = True
         message = input(f"Please provide message for {self.crypto_type}: ").strip()
-        rot_type = ''                                                                                                   # TODO: znow, jak nie zdefiniuje czegos to podswietla w returnie
+        rot_type = ''                            # TODO: znow, jak nie zdefiniuje czegos to podswietla w returnie
         while get_data_running:
             rot_type = input(f"What {self.crypto_type} method would you like to use ROT13 or ROT47: ").strip().lower()
             if rot_type in ['rot13', 'rot47']:

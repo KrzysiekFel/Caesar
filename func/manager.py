@@ -1,6 +1,5 @@
 from func.encrypt_decrypt import CryptoProcesses
-from dataclasses import dataclass
-from typing import List
+from func.memory_buffer import CryptoElem, Buffer
 
 cipher_ascii = \
 """      _       _               
@@ -11,28 +10,6 @@ cipher_ascii = \
  \___|_| .__/|_| |_|\___|_|   
        | |                    
        |_|                    """
-
-
-@dataclass
-class CryptoElem:
-    message: str
-    rot_type: str
-    crypto_type: str
-
-    def __repr__(self):
-        return f"{self.message: <18}{self.crypto_type: <15}{self.rot_type: <15}"
-
-
-class Buffer:
-    memory: List[CryptoElem] = []
-
-    def show_memory_buffer(self):
-        print("Printing current memory buffer.")
-        print('=' * 42)
-        print(f"{'MESSAGE': <18}{'AFTER': <15}{'ROT TYPE': <15}")
-        for crypto_elem in self.memory:
-            print(crypto_elem)
-        print('=' * 42)
 
 
 class Manager:
@@ -56,7 +33,7 @@ class Manager:
 
     def show_menu(self) -> int:
         run_menu = True
-        choice_number = 0                                                                                      # TODO: czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
+        choice_number = 0                 # TODO: czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
         while run_menu:
             print("*" * 31)
             print("1. Encrypt a message\n2. Decrypt a message\n3. Show memory buffer\n4. Clear memory buffer\n"
@@ -79,7 +56,7 @@ class Manager:
             case 3:
                 self.buffer.show_memory_buffer()
             case 4:
-                pass
+                self.buffer.clear_memory_buffer()
             case 5:
                 pass
             case 6:
