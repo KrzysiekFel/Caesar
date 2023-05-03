@@ -1,4 +1,7 @@
 from func.encrypt_decrypt import CryptoProcesses
+from func.memory_buffer import Buffer, CryptoElem
+from func.file_handler import FileHandler
+from unittest.mock import patch, mock_open
 import pytest
 
 
@@ -38,3 +41,16 @@ class TestDecryptProcess:
     def test_should_return_correctly_decrypted_message_for_rot47(self, message, result):
         final_message = self.crypto_process.encrypt_decrypt_process(message, "ROT47", self.crypto_process.crypto_type)
         assert final_message == result
+
+
+class TestBuffer:
+    def setup_method(self):
+        self.buffer = Buffer()
+
+    def test_should_clear_buffer_when_memory_consists_elements(self):
+        test_elem_crypto = CryptoElem("test_message", "test_rot_type", "test_crypto_type")
+        self.buffer.memory.append(test_elem_crypto)
+        self.buffer.clear_memory_buffer()
+        assert self.buffer.memory == []
+
+

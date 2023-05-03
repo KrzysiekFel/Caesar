@@ -58,9 +58,11 @@ class Manager:
             case 4:
                 self.buffer.clear_memory_buffer()
             case 5:
-                self.file_handler.write_to_file(self.buffer.memory)
+                file_name = self.file_handler.get_file_name()
+                self.file_handler.write_to_file(self.buffer.memory, file_name)
             case 6:
-                for crypto_object in self.file_handler.read_from_file():
+                file_name = self.file_handler.get_file_name()
+                for crypto_object in self.file_handler.read_from_file(file_name):
                     self.buffer.memory.append(crypto_object)
             case 7:
                 print("Good bye!")
