@@ -79,5 +79,4 @@ class TestFileHandler:
         with patch("builtins.open", mock_open()) as mock_file:
             self.handler.write_to_file(crypto_list, "test_file")
             mock_file.assert_called_once_with(self.fake_file_path, 'a')
-
-            #mock_file().write.assert_called_once_with(self.file_cont)
+            mock_file().write.assert_called_once_with(self.file_cont)

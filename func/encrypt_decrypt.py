@@ -3,17 +3,29 @@ from typing import Tuple
 
 
 class CryptoProcesses:
+    """
+    Class for handling decryption and encryption.
+    """
     def __init__(self, crypto_type: str):
         self.crypto_type = crypto_type
         self.alphabet_lower = string.ascii_lowercase
         self.alphabet_upper = string.ascii_uppercase
 
     def start(self) -> Tuple[str, str]:
+        """
+        Initiating and executing crypto process.
+
+        :return: final encrypted/decrypted message and rot type
+        """
         message, rot_type = self.get_data_for_operation()
         returned_message = self.encrypt_decrypt_process(message, rot_type, self.crypto_type)
         return returned_message, rot_type
 
     def get_data_for_operation(self) -> Tuple[str, str]:
+        """
+        Getting input message and rot type from user.
+        :return: message and rot type
+        """
         get_data_running = True
         message = input(f"Please provide message for {self.crypto_type}: ")
         rot_type = ''                            # TODO: znow, jak nie zdefiniuje czegos to podswietla w returnie
@@ -26,6 +38,14 @@ class CryptoProcesses:
         return message, rot_type
 
     def encrypt_decrypt_process(self, message: str, rot_type: str, crypto_type) -> str:
+        """
+        Main method for encrypting and decrypting message.
+
+        :param message: text to process
+        :param rot_type: rot type
+        :param crypto_type: encryption or decryption
+        :return: final message
+        """
         encrypted_message = []
         shift = int(rot_type[3:])
 
