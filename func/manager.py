@@ -14,12 +14,18 @@ cipher_ascii = \
 
 
 class Manager:
+    """
+    Class for handling program.
+    """
     def __init__(self):
         self.buffer = Buffer()
         self.program_is_working = True
         self.file_handler = FileHandler()
 
     def start(self) -> None:
+        """
+        Initiating program.
+        """
         print("*" * 31)
         print(cipher_ascii)
         while self.program_is_working:
@@ -27,6 +33,10 @@ class Manager:
             self.execute(choice_number)
 
     def get_input(self) -> int:
+        """
+        Getting chosen action input from user.
+        :return: choice number
+        """
         choice_number = int(input("Which action do you choose: ").strip())
         if choice_number in range(1, 8):
             return choice_number
@@ -34,6 +44,10 @@ class Manager:
             print(f"Provided option: {choice_number}, not such option. Choose again.")
 
     def show_menu(self) -> int:
+        """
+        Showing menu.
+        :return: chosen action
+        """
         run_menu = True
         choice_number = 0                 # TODO: czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
         while run_menu:
@@ -48,27 +62,35 @@ class Manager:
         return choice_number
 
     def execute(self, choice_number: int) -> None:
+        """
+        Execute chosen action.
+        :param choice_number
+        """
         match choice_number:
             case 1:
-                crypto_type = "encrypting"
-                self.crypto_execution(crypto_type)
+                self.crypto_execution("encrypting")
             case 2:
-                crypto_type = "decrypting"
-                self.crypto_execution(crypto_type)
+                self.crypto_execution("decrypting")
             case 3:
                 self.buffer.show_memory_buffer()
             case 4:
                 self.buffer.clear_memory_buffer()
             case 5:
-                self.file_handler.write_to_file(self.buffer.memory)
+                file_name = self.file_handler.get_file_name()
+                self.file_handler.write_to_file(self.buffer.memory, file_name)
             case 6:
-                for crypto_object in self.file_handler.read_from_file():
+                file_name = self.file_handler.get_file_name()
+                for crypto_object in self.file_handler.read_from_file(file_name):
                     self.buffer.memory.append(crypto_object)
             case 7:
                 print("Good bye!")
                 self.program_is_working = False
 
     def crypto_execution(self, crypto_type: str) -> None:
+        """
+        Method for executing encryption or decryption and saving result to buffer.
+        :param crypto_type: encrypting or decrypting
+        """
         crypto_process = CryptoProcesses(crypto_type)
         final_message, rot_type = crypto_process.start()
         crypto_elem = CryptoElem(final_message, rot_type, crypto_type)

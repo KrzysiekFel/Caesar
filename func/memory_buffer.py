@@ -13,9 +13,15 @@ class CryptoElem:
 
 
 class Buffer:
+    """
+    Class for handling memory buffer.
+    """
     memory: List[CryptoElem] = []
 
     def show_memory_buffer(self) -> None:
+        """
+        Printing memory buffer to user.
+        """
         print("Printing current memory buffer.")
         print('=' * 42)
         print(f"{'MESSAGE:': <18}{'AFTER:': <15}{'ROT TYPE:': <15}")
@@ -24,5 +30,8 @@ class Buffer:
         print('=' * 42)
 
     def clear_memory_buffer(self) -> None:
+        """
+        Clearing memory buffer.
+        """
         self.memory = []
         print("Memory buffer has been cleared.")
