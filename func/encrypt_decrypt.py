@@ -14,7 +14,6 @@ class CryptoProcesses:
     def start(self) -> Tuple[str, str]:
         """
         Initiating and executing crypto process.
-
         :return: final encrypted/decrypted message and rot type
         """
         message, rot_type = self.get_data_for_operation()
@@ -40,7 +39,6 @@ class CryptoProcesses:
     def encrypt_decrypt_process(self, message: str, rot_type: str, crypto_type) -> str:
         """
         Main method for encrypting and decrypting message.
-
         :param message: text to process
         :param rot_type: rot type
         :param crypto_type: encryption or decryption

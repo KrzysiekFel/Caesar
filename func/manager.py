@@ -24,7 +24,7 @@ class Manager:
 
     def start(self) -> None:
         """
-        Initiating program.
+        Executing user choices.
         """
         print("*" * 31)
         print(cipher_ascii)
