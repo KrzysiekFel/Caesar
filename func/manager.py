@@ -21,6 +21,9 @@ class Manager:
         self.buffer = Buffer()
         self.file_handler = FileHandler()
         self.program_is_working = True
+        self.available_choices = {1: "Encrypt a message", 2: "Decrypt a message", 3: "Show memory buffer",
+                                  4: "Clear memory buffer", 5: "Write buffer to file", 6: "Read file to memory buffer",
+                                  7: "Exit"}
 
     def start(self) -> None:
         """
@@ -38,7 +41,7 @@ class Manager:
         :return: choice number
         """
         choice_number = int(input("Which action do you choose: ").strip())
-        if choice_number in range(1, 8):
+        if choice_number in self.available_choices.keys():
             return choice_number
         else:
             print(f"Provided option: {choice_number}, not such option. Choose again.")
@@ -52,8 +55,8 @@ class Manager:
         choice_number = 0
         while run_menu:
             print("*" * 31)
-            print("1. Encrypt a message\n2. Decrypt a message\n3. Show memory buffer\n4. Clear memory buffer\n"
-                  "5. Write buffer to file\n6. Read file to memory buffer\n7. Exit")
+            for key, value in self.available_choices.items():
+                print(f"{key}. {value}")
             try:
                 choice_number = self.get_input()
                 run_menu = False
