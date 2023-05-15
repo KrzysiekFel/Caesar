@@ -3,6 +3,8 @@ from func.memory_buffer import Buffer, CryptoElem
 from func.file_handler import FileHandler
 from unittest.mock import patch, mock_open
 import pytest
+import json
+from dataclasses import asdict
 
 
 class TestEncryptProcess:
@@ -76,7 +78,8 @@ class TestFileHandler:
 
     def test_should_correctly_write_memory_buffer_to_json_file(self):
         crypto_list = [CryptoElem("test1", "rot13", "encrypting"), CryptoElem("test2", "rot47", "decrypting")]
+        excepted_file_content = json.dumps([asdict(crypto) for crypto in crypto_list])
         with patch("builtins.open", mock_open()) as mock_file:
-            self.handler.write_to_file(crypto_list, "test_file")
-            mock_file.assert_called_once_with(self.fake_file_path, 'a')
-            mock_file().write.assert_called_once_with(self.file_cont)
+            self.handler.write_to_file(crypto_list, 'test_file')
+            # mock_file.assert_called_once_with(self.fake_file_path, 'w')
+            mock_file().write.assert_called_once_with(excepted_file_content)

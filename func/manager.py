@@ -19,8 +19,8 @@ class Manager:
     """
     def __init__(self):
         self.buffer = Buffer()
-        self.program_is_working = True
         self.file_handler = FileHandler()
+        self.program_is_working = True
 
     def start(self) -> None:
         """
@@ -49,7 +49,7 @@ class Manager:
         :return: chosen action
         """
         run_menu = True
-        choice_number = 0                 # TODO: czy tak to tutaj mam dołożyć? jak nie ma to podswietla return
+        choice_number = 0
         while run_menu:
             print("*" * 31)
             print("1. Encrypt a message\n2. Decrypt a message\n3. Show memory buffer\n4. Clear memory buffer\n"
