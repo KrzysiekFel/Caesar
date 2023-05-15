@@ -26,15 +26,14 @@ class CryptoProcesses:
         :return: message and rot type
         """
         get_data_running = True
-        message = input(f"Please provide message for {self.crypto_type}: ")
-        rot_type = ''                            # TODO: znow, jak nie zdefiniuje czegos to podswietla w returnie
+        user_message = input(f"Please provide message for {self.crypto_type}: ")
         while get_data_running:
-            rot_type = input(f"What {self.crypto_type} method would you like to use ROT13 or ROT47: ").strip().lower()
-            if rot_type in ['rot13', 'rot47']:
+            chosen_rot_type = input(f"What {self.crypto_type} method would you like to use ROT13 or ROT47: ").strip().lower()
+            if chosen_rot_type in ['rot13', 'rot47']:
                 get_data_running = False
             else:
                 print("ROT type not existing, provide ROT type again.")
-        return message, rot_type
+        return user_message, chosen_rot_type
 
     def encrypt_decrypt_process(self, message: str, rot_type: str, crypto_type) -> str:
         """

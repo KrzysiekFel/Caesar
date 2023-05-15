@@ -1,4 +1,4 @@
-from func.memory_buffer import CryptoElem
+from .memory_buffer import CryptoElem
 from typing import Dict, List
 import json
 
@@ -10,7 +10,8 @@ class FileHandler:
     def __init__(self):
         self.folder_path = "json_files/"
 
-    def get_file_name(self) -> str:
+    @staticmethod
+    def get_file_name() -> str:
         """
         Getting file name input from user.
         :return: file name
@@ -57,4 +58,8 @@ class FileHandler:
             loaded_json_dict = json.load(json_file)
         list_of_dicts = loaded_json_dict["memory_buffer"]
         print(f"Buffer has been updated from: {file_path}")
-        return [self.dict_to_crypto_object(crypto_dict) for crypto_dict in list_of_dicts]
+        return [CryptoElem(**crypto_dict) for crypto_dict in list_of_dicts]
+
+
+# dct = {"message": crypto.message, "rot_type": crypto.rot_type, "crypto_type": crypto.crypto_type
+# CryptoElem(**dct) = CryptoElem(message=crypto.message. )
