@@ -1,5 +1,5 @@
-# Content of project
-* [General info])(#general info)
+## Table of contents
+* [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
