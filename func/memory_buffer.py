@@ -8,11 +8,6 @@ class CryptoElem:
     rot_type: str
     crypto_type: str
 
-    # def __repr__(self) -> str:
-    #     return f"{self.message: <18}{self.crypto_type: <15}{self.rot_type: <15}"
-
-    # def __str__(self):
-    #     return f"{self.message: <18}{self.crypto_type: <15}{self.rot_type: <15}"
 
 class Buffer:
     """
