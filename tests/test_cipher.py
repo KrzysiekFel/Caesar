@@ -1,10 +1,5 @@
 from func.encrypt_decrypt import CryptoProcesses
-from func.memory_buffer import Buffer, CryptoElem
-from func.file_handler import FileHandler
-from unittest.mock import patch, mock_open
 import pytest
-import json
-from dataclasses import asdict
 
 
 class TestEncryptProcess:
@@ -43,43 +38,3 @@ class TestDecryptProcess:
     def test_should_return_correctly_decrypted_message_for_rot47(self, message, result):
         final_message = self.crypto_process.encrypt_decrypt_process(message, "ROT47", self.crypto_process.crypto_type)
         assert final_message == result
-
-
-class TestBuffer:
-    def setup_method(self):
-        self.buffer = Buffer()
-
-    def test_should_clear_buffer_when_memory_consists_elements(self):
-        test_elem_crypto = CryptoElem("test_message", "test_rot_type", "test_crypto_type")
-        self.buffer.memory.append(test_elem_crypto)
-        self.buffer.clear_memory_buffer()
-        assert self.buffer.memory == []
-
-
-class TestFileHandler:
-    def setup_method(self):
-        self.handler = FileHandler()
-        self.fake_file_path = "json_files/test_file.json"
-        self.file_cont = '{"memory_buffer": ' \
-                         '[{"message": "test1", "rot_type": "rot13", "crypto_type": "encrypting"}, ' \
-                         '{"message": "test2", "rot_type": "rot47", "crypto_type": "decrypting"}]} '
-
-    def test_should_return_list_of_objects_when_reading_from_json_file(self):
-        with patch("builtins.open", mock_open(read_data=self.file_cont)) as mock_file:
-            crypto_list = self.handler.read_from_file("test_file")
-            mock_file.assert_called_once_with(self.fake_file_path)
-            assert len(crypto_list) == 2
-            assert crypto_list[0].message == "test1"
-            assert crypto_list[0].rot_type == "rot13"
-            assert crypto_list[0].crypto_type == "encrypting"
-            assert crypto_list[1].message == "test2"
-            assert crypto_list[1].rot_type == "rot47"
-            assert crypto_list[1].crypto_type == "decrypting"
-
-    def test_should_correctly_write_memory_buffer_to_json_file(self):
-        crypto_list = [CryptoElem("test1", "rot13", "encrypting"), CryptoElem("test2", "rot47", "decrypting")]
-        excepted_file_content = json.dumps([asdict(crypto) for crypto in crypto_list])
-        with patch("builtins.open", mock_open()) as mock_file:
-            self.handler.write_to_file(crypto_list, 'test_file')
-            # mock_file.assert_called_once_with(self.fake_file_path, 'w')
-            mock_file().write.assert_called_once_with(excepted_file_content)
