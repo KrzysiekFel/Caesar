@@ -1,6 +1,7 @@
 from .memory_buffer import CryptoElem
 from typing import Dict, List
 import json
+from dataclasses import asdict
 
 
 class FileHandler:
@@ -26,8 +27,9 @@ class FileHandler:
         :param file_name: name of json file
         """
         file_path = self.folder_path + file_name + ".json"
-        result = {"memory_buffer": [crypto.__dict__ for crypto in crypto_list]}
-        with open(file_path, "a") as outfile:
+        result = {"memory_buffer": [asdict(crypto) for crypto in crypto_list]}
+        print(file_path)
+        with open(file_path, "w") as outfile:
             json.dump(result, outfile)
         print(f"Buffer has been written to: {file_path}")
 
